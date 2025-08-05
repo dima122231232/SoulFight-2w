@@ -1,18 +1,18 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "G:\\Distrib\\SoulFight-2w\\project\\",
+  "WorkspaceRootPath": "D:\\SoulFight-2w\\project\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7CA597AC-799E-2D81-E8A0-0EA9A568434E}|Assembly-CSharp.csproj|g:\\distrib\\soulfight-2w\\project\\assets\\scripts\\playervisual.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7CA597AC-799E-2D81-E8A0-0EA9A568434E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playervisual.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7CA597AC-799E-2D81-E8A0-0EA9A568434E}|Assembly-CSharp.csproj|g:\\distrib\\soulfight-2w\\project\\assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{7CA597AC-799E-2D81-E8A0-0EA9A568434E}|Assembly-CSharp.csproj|d:\\soulfight-2w\\project\\assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7CA597AC-799E-2D81-E8A0-0EA9A568434E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7CA597AC-799E-2D81-E8A0-0EA9A568434E}|Assembly-CSharp.csproj|g:\\distrib\\soulfight-2w\\project\\assets\\scripts\\gameinput.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7CA597AC-799E-2D81-E8A0-0EA9A568434E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gameinput.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7CA597AC-799E-2D81-E8A0-0EA9A568434E}|Assembly-CSharp.csproj|d:\\soulfight-2w\\project\\assets\\scripts\\menu\\menulink.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7CA597AC-799E-2D81-E8A0-0EA9A568434E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\menu\\menulink.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\SoulFight-2w\\project\\Assets\\Scripts\\menu\\Menu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\menu\\Menu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,41 +27,39 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "PlayerVisual.cs",
-              "DocumentMoniker": "G:\\Distrib\\SoulFight-2w\\project\\Assets\\Scripts\\PlayerVisual.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerVisual.cs",
-              "ToolTip": "G:\\Distrib\\SoulFight-2w\\project\\Assets\\Scripts\\PlayerVisual.cs",
-              "RelativeToolTip": "Assets\\Scripts\\PlayerVisual.cs",
+              "Title": "Player.cs",
+              "DocumentMoniker": "D:\\SoulFight-2w\\project\\Assets\\Scripts\\Player.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Player.cs",
+              "ToolTip": "D:\\SoulFight-2w\\project\\Assets\\Scripts\\Player.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Player.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-04T15:37:58.392Z",
+              "WhenOpened": "2025-08-05T15:05:16.719Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Player.cs",
-              "DocumentMoniker": "G:\\Distrib\\SoulFight-2w\\project\\Assets\\Scripts\\Player.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Player.cs",
-              "ToolTip": "G:\\Distrib\\SoulFight-2w\\project\\Assets\\Scripts\\Player.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Player.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAowCgAAAAWAAAAAAAAAA==",
+              "Title": "menuLink.cs",
+              "DocumentMoniker": "D:\\SoulFight-2w\\project\\Assets\\Scripts\\menu\\menuLink.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\menu\\menuLink.cs",
+              "ToolTip": "D:\\SoulFight-2w\\project\\Assets\\Scripts\\menu\\menuLink.cs",
+              "RelativeToolTip": "Assets\\Scripts\\menu\\menuLink.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-04T15:37:39.096Z",
+              "WhenOpened": "2025-08-05T14:56:18.88Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "GameInput.cs",
-              "DocumentMoniker": "G:\\Distrib\\SoulFight-2w\\project\\Assets\\Scripts\\GameInput.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\GameInput.cs",
-              "ToolTip": "G:\\Distrib\\SoulFight-2w\\project\\Assets\\Scripts\\GameInput.cs",
-              "RelativeToolTip": "Assets\\Scripts\\GameInput.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "Menu.cs",
+              "DocumentMoniker": "D:\\SoulFight-2w\\project\\Assets\\Scripts\\menu\\Menu.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\menu\\Menu.cs",
+              "ToolTip": "D:\\SoulFight-2w\\project\\Assets\\Scripts\\menu\\Menu.cs",
+              "RelativeToolTip": "Assets\\Scripts\\menu\\Menu.cs",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-04T15:36:19.785Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-05T14:38:44.23Z"
             }
           ]
         }

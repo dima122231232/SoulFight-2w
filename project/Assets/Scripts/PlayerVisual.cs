@@ -13,9 +13,11 @@ public class PlayerVisual : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void Update()
+    // обновление на каждый кадр (FixedUpdate - обновляет каждые 60 кадров)
+    private void FixedUpdate()
     {
-        if (Player.Instance == null) {
+        if (Player.Instance == null)
+        {
             Debug.LogWarning("Player.Instance is null");
             return;
         }
@@ -24,18 +26,16 @@ public class PlayerVisual : MonoBehaviour
         AdjustPlayerFacingDirection();
     }
 
+    // направление спрайта (берем значение последнего значения вектора с Player
+    // и сравниваем с нулем
     private void AdjustPlayerFacingDirection()
     {
-        Vector3 mousePos = GameInput.Instance.GetMousePosition();
-        Vector3 playerPosition = Player.Instance.GetPlayerScreenPosition();
+        // получение с класса Player
+        Vector2 lastMoveDir = Player.Instance.GetLastMoveDir();
 
-        if (mousePos.x < playerPosition.x)
-        {
+        if (lastMoveDir.x < 0)
             spriteRenderer.flipX = true;
-        }
-        else
-        {
+        else if (lastMoveDir.x > 0)
             spriteRenderer.flipX = false;
-        }
     }
 }

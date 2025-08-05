@@ -26,8 +26,9 @@ public class GameInput : MonoBehaviour
         return playerInputActions.Player.Move.ReadValue<Vector2>();
     }
 
-    public Vector3 GetMousePosition() {
-        Vector3 mousePos = Mouse.current.position.ReadValue();
-        return mousePos;
-    }
+    // получение позиции мыши
+    //public Vector3 GetMousePosition() {
+    //    Vector3 mousePos = Mouse.current.position.ReadValue();
+    //    return mousePos;
+    //}
 }

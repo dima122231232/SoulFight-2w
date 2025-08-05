@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    /* ссылочная переменная через которую мы открываем доступ к функциям и переменным
+    но значение private set запрещает изменять их */
     public static Player Instance { get; private set; }
 
     [SerializeField] private float movingSpeed = 5f;
@@ -11,6 +13,8 @@ public class Player : MonoBehaviour
 
     private float minMovingSpeed = 0.1f;
     private bool isRunning = false;
+    private Vector2 lastMoveDir = Vector2.right;
+
 
     private void Awake()
     {
@@ -20,6 +24,7 @@ public class Player : MonoBehaviour
             return;
         }
 
+        // сохраняет ссылку на текущий объект, чтобы другие скрипты могли удобно к нему обращаться
         Instance = this;
 
         rb = GetComponent<Rigidbody2D>();
@@ -43,20 +48,18 @@ public class Player : MonoBehaviour
 
         if (Mathf.Abs(inputVector.x) > minMovingSpeed || Mathf.Abs(inputVector.y) > minMovingSpeed) {
             isRunning = true;
+            lastMoveDir = inputVector.normalized;
         }
         else {
             isRunning = false;
         }
     }
 
+    public Vector2 GetLastMoveDir() { 
+        return lastMoveDir;
+    }
+
     public bool IsRunning() {
         return isRunning;
     }
-
-    public Vector3 GetPlayerScreenPosition() {
-        Vector3 playerScreenPosition = Camera.main.WorldToScreenPoint(transform.position);
-        return playerScreenPosition;
-    }
-
-    
 }

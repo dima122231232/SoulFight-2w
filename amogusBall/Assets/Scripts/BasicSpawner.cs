@@ -8,25 +8,40 @@ using UnityEngine.SceneManagement;
 
 public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 {
+    public static BasicSpawner Instance { get; private set; }
+
     private NetworkRunner _runner;
+
     [SerializeField] private NetworkPrefabRef _playerPrefab;
-    private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
+
+    private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new();
+
+    private void Awake()
+    {
+        // Singleton и защита от дубликатов
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     async void StartGame(GameMode mode)
     {
-        // Create the Fusion runner and let it know that we will be providing user input
         _runner = gameObject.AddComponent<NetworkRunner>();
         _runner.ProvideInput = true;
 
-        // Create the NetworkSceneInfo from the current scene
         var scene = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex);
         var sceneInfo = new NetworkSceneInfo();
+
         if (scene.IsValid)
         {
             sceneInfo.AddSceneRef(scene, LoadSceneMode.Additive);
         }
 
-        // Start or join (depends on gamemode) a session with a specific name
         await _runner.StartGame(new StartGameArgs()
         {
             GameMode = mode,
@@ -44,52 +59,52 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
             {
                 StartGame(GameMode.Host);
             }
-            if (GUI.Button(new Rect(0, 40, 200, 40), "Join"))
+            if (GUI.Button(new Rect(0, 50, 200, 40), "Join"))
             {
                 StartGame(GameMode.Client);
             }
         }
     }
 
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) {
+    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+    {
         if (runner.IsServer)
         {
-            // Create a unique position for the player
-            Vector3 spawnPosition = new Vector3((player.RawEncoded % runner.Config.Simulation.PlayerCount) * 3, 1, 0);
+            Vector3 spawnPosition = new Vector3((player.RawEncoded % 5) * 2.0f, UnityEngine.Random.Range(-3f, 3f), 0f);
             NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
-            // Keep track of the player avatars for easy access
             _spawnedCharacters.Add(player, networkPlayerObject);
         }
     }
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) {
+
+    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+    {
         if (_spawnedCharacters.TryGetValue(player, out NetworkObject networkObject))
         {
             runner.Despawn(networkObject);
             _spawnedCharacters.Remove(player);
         }
     }
+
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
         var data = new NetworkInputData();
         var keyboard = Keyboard.current;
 
-        if (keyboard == null)
-            return; // нет клавиатуры
+        if (keyboard == null) return;
 
         if (keyboard.wKey.isPressed)
-            data.direction += Vector3.forward;
-
+            data.direction += Vector2.up;
         if (keyboard.sKey.isPressed)
-            data.direction += Vector3.back;
-
+            data.direction += Vector2.down;
         if (keyboard.aKey.isPressed)
-            data.direction += Vector3.left;
-
+            data.direction += Vector2.left;
         if (keyboard.dKey.isPressed)
-            data.direction += Vector3.right;
+            data.direction += Vector2.right;
 
         input.Set(data);
     }
+
+    // Остальные методы колбэков оставляем пустыми
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
     public void OnConnectedToServer(NetworkRunner runner) { }

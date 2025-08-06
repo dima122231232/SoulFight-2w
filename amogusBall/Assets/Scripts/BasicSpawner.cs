@@ -114,6 +114,9 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         if (keyboard.dKey.isPressed)
             data.direction += Vector2.right;
 
+        if (data.direction != Vector2.zero)
+            Debug.Log($"[Input] Sending: {data.direction}");
+
         input.Set(data);
     }
 

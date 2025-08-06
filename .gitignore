@@ -1,41 +1,58 @@
-###
-# Unity folders and files
-###
-[Aa]ssets/AssetStoreTools*
-[Bb]uild/
+### UNITY ###
 [Ll]ibrary/
-[Ll]ocal[Cc]ache/
-[Oo]bj/
 [Tt]emp/
-[Uu]nityGenerated/
-# file on crash reports
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]serSettings/
+MemoryCaptures/
 sysinfo.txt
-# Unity3D generated meta files
+*.stacktrace
 *.pidb.meta
+*.pdb
+*.mdb
 
-###
-# VS/MD solution and project files
-###
-[Ee]xportedObj/
+# Unity generated meta files
+*.pidb
 *.booproj
+*.svd
+*.unityproj
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+### VISUAL STUDIO ###
+.vs/
 *.csproj
 *.sln
 *.suo
-*.svd
-*.unityproj
 *.user
-*.userprefs
-*.pidb
-.DS_Store
+*.userosscache
+*.sln.docstates
+*.vsp
+*.vsidx
+*.db
+*.db-shm
+*.db-wal
 
-###
-# OS generated
-###
+### OS files ###
 .DS_Store
 .DS_Store?
 ._*
 .Spotlight-V100
 .Trashes
-Icon?
 ehthumbs.db
 Thumbs.db
+desktop.ini
+Icon?
+
+### GIT ###
+*.orig
+*.rej
+*.bak
+
+### ENV FILES ###
+.env
+.env.*

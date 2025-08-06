@@ -1,6 +1,7 @@
 using Fusion;
 using Fusion.Sockets;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,6 +14,8 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField] private NetworkPrefabRef _playerPrefab;
 
     private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new();
+
+    private Coroutine _logCoroutine;
 
     async void StartGame(GameMode mode)
     {
@@ -34,6 +37,27 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
             Scene = scene,
             SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
         });
+
+        // Запускаем логирование
+        if (_logCoroutine == null)
+            _logCoroutine = StartCoroutine(LogEverySecond());
+    }
+
+    private IEnumerator LogEverySecond()
+    {
+        while (true)
+        {
+            Debug.Log("[BasicSpawner] Tick: " + Time.time + $" | Players: {_spawnedCharacters.Count}");
+
+            foreach (var kvp in _spawnedCharacters)
+            {
+                var playerRef = kvp.Key;
+                var obj = kvp.Value;
+                Debug.Log($"  Player {playerRef.PlayerId} => Object: {obj.name}, Pos: {obj.transform.position}");
+            }
+
+            yield return new WaitForSeconds(1f);
+        }
     }
 
     private void OnGUI()
@@ -59,6 +83,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
             NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
             _spawnedCharacters.Add(player, networkPlayerObject);
 
+            Debug.Log($"[BasicSpawner] Player joined: {player.PlayerId}");
         }
     }
 
@@ -68,6 +93,8 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         {
             runner.Despawn(networkObject);
             _spawnedCharacters.Remove(player);
+
+            Debug.Log($"[BasicSpawner] Player left: {player.PlayerId}");
         }
     }
 

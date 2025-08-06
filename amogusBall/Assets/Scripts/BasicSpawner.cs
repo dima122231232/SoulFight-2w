@@ -58,6 +58,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
             Vector3 spawnPosition = new Vector3((player.RawEncoded % 5) * 2.0f, UnityEngine.Random.Range(-3f, 3f), 0f);
             NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
             _spawnedCharacters.Add(player, networkPlayerObject);
+
         }
     }
 

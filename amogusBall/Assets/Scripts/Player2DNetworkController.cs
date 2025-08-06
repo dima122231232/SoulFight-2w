@@ -15,6 +15,8 @@ public class Player2DNetworkController : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        if (!HasInputAuthority) return;
+
         if (GetInput(out NetworkInputData data))
         {
             Vector2 direction = data.direction.normalized;

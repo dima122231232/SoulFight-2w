@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 7583993766832437024}
   - component: {fileID: 1713878161046095849}
   - component: {fileID: 8728295426575502435}
+  - component: {fileID: 4968218229856275638}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -164,6 +165,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 1713878161046095849}
+  - {fileID: 4968218229856275638}
   ForceRemoteRenderTimeframe: 0
 --- !u!50 &7583993766832437024
 Rigidbody2D:
@@ -251,3 +253,20 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.71416193, y: 0.2563721}
   m_EdgeRadius: 0
+--- !u!114 &4968218229856275638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5596240423600872188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0

@@ -8,26 +8,11 @@ using UnityEngine.SceneManagement;
 
 public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 {
-    public static BasicSpawner Instance { get; private set; }
-
     private NetworkRunner _runner;
 
     [SerializeField] private NetworkPrefabRef _playerPrefab;
 
     private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new();
-
-    private void Awake()
-    {
-        // Singleton и защита от дубликатов
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
 
     async void StartGame(GameMode mode)
     {

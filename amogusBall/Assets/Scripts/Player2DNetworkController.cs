@@ -4,8 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player2DNetworkController : NetworkBehaviour
 {
-    public static Player2DNetworkController Local { get; private set; }
-
     public float moveSpeed = 5f;
 
     private Rigidbody2D rb;
@@ -13,12 +11,6 @@ public class Player2DNetworkController : NetworkBehaviour
     public override void Spawned()
     {
         rb = GetComponent<Rigidbody2D>();
-
-        // Сохраняем singleton только для локального игрока
-        if (Object.HasInputAuthority)
-        {
-            Local = this;
-        }
     }
 
     public override void FixedUpdateNetwork()

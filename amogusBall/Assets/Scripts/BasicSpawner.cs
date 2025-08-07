@@ -1,35 +1,29 @@
 using Fusion;
 using Fusion.Sockets;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 {
     private NetworkRunner _runner;
 
-    [SerializeField] private NetworkPrefabRef _playerPrefab;
-
-    private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new();
-
-    private Coroutine _logCoroutine;
-
     async void StartGame(GameMode mode)
     {
+        // Create the Fusion runner and let it know that we will be providing user input
         _runner = gameObject.AddComponent<NetworkRunner>();
         _runner.ProvideInput = true;
 
+        // Create the NetworkSceneInfo from the current scene
         var scene = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex);
         var sceneInfo = new NetworkSceneInfo();
-
         if (scene.IsValid)
         {
             sceneInfo.AddSceneRef(scene, LoadSceneMode.Additive);
         }
 
+        // Start or join (depends on gamemode) a session with a specific name
         await _runner.StartGame(new StartGameArgs()
         {
             GameMode = mode,
@@ -37,29 +31,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
             Scene = scene,
             SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
         });
-
-        // Запускаем логирование
-        if (_logCoroutine == null)
-            _logCoroutine = StartCoroutine(LogEverySecond());
     }
-
-    private IEnumerator LogEverySecond()
-    {
-        while (true)
-        {
-            Debug.Log("[BasicSpawner] Tick: " + Time.time + $" | Players: {_spawnedCharacters.Count}");
-
-            foreach (var kvp in _spawnedCharacters)
-            {
-                var playerRef = kvp.Key;
-                var obj = kvp.Value;
-                Debug.Log($"  Player {playerRef.PlayerId} => Object: {obj.name}, Pos: {obj.transform.position}");
-            }
-
-            yield return new WaitForSeconds(1f);
-        }
-    }
-
     private void OnGUI()
     {
         if (_runner == null)
@@ -68,59 +40,52 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
             {
                 StartGame(GameMode.Host);
             }
-            if (GUI.Button(new Rect(0, 50, 200, 40), "Join"))
+            if (GUI.Button(new Rect(0, 40, 200, 40), "Join"))
             {
                 StartGame(GameMode.Client);
             }
         }
     }
 
+    [SerializeField] private NetworkPrefabRef _playerPrefab;
+    private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         if (runner.IsServer)
         {
-            Vector3 spawnPosition = new Vector3((player.RawEncoded % 5) * 2.0f, UnityEngine.Random.Range(-3f, 3f), 0f);
+            // Create a unique position for the player
+            Vector3 spawnPosition = new Vector3((player.RawEncoded % runner.Config.Simulation.PlayerCount) * 3, 1, 0);
             NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
+            // Keep track of the player avatars for easy access
             _spawnedCharacters.Add(player, networkPlayerObject);
-
-            Debug.Log($"[BasicSpawner] Player joined: {player.PlayerId}");
         }
     }
-
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
         if (_spawnedCharacters.TryGetValue(player, out NetworkObject networkObject))
         {
             runner.Despawn(networkObject);
             _spawnedCharacters.Remove(player);
-
-            Debug.Log($"[BasicSpawner] Player left: {player.PlayerId}");
         }
     }
-
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
         var data = new NetworkInputData();
-        var keyboard = Keyboard.current;
 
-        if (keyboard == null) return;
+        if (Input.GetKey(KeyCode.W))
+            data.direction += Vector3.forward;
 
-        if (keyboard.wKey.isPressed)
-            data.direction += Vector2.up;
-        if (keyboard.sKey.isPressed)
-            data.direction += Vector2.down;
-        if (keyboard.aKey.isPressed)
-            data.direction += Vector2.left;
-        if (keyboard.dKey.isPressed)
-            data.direction += Vector2.right;
+        if (Input.GetKey(KeyCode.S))
+            data.direction += Vector3.back;
 
-        if (data.direction != Vector2.zero)
-            Debug.Log($"[Input] Sending: {data.direction}");
+        if (Input.GetKey(KeyCode.A))
+            data.direction += Vector3.left;
+
+        if (Input.GetKey(KeyCode.D))
+            data.direction += Vector3.right;
 
         input.Set(data);
     }
-
-    // Остальные методы колбэков оставляем пустыми
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
     public void OnConnectedToServer(NetworkRunner runner) { }

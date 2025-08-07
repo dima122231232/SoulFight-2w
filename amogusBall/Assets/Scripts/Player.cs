@@ -1,28 +1,44 @@
 using Fusion;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(NetworkObject))]
-[RequireComponent(typeof(NetworkTransform))]
 public class Player : NetworkBehaviour
 {
-    private Rigidbody2D _rb;
+    [Networked]
+    private Vector2 NetworkedPosition { get; set; }
 
-    private void Awake()
+    public float speed = 15f;
+
+    private void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        if (Object.HasStateAuthority)
+        {
+            // »нициализаци€ позиции на сервере
+            NetworkedPosition = transform.position;
+        }
     }
 
     public override void FixedUpdateNetwork()
     {
         if (GetInput(out NetworkInputData data))
         {
-            data.direction.Normalize();
-            _rb.linearVelocity = 15f * data.direction; 
+            if (data.direction != Vector2.zero)
+                data.direction.Normalize();
+
+            // ќбновл€ем позицию на основе направлени€ и скорости
+            Vector2 newPosition = NetworkedPosition + data.direction * speed * Runner.DeltaTime;
+
+            NetworkedPosition = newPosition;
+            transform.position = newPosition; // обновл€ем позицию сразу дл€ хоста/сервера
         }
-        else
+    }
+
+    private void Update()
+    {
+        //  лиенты без авторитета плавно интерполируют позицию дл€ плавности
+        if (!Object.HasStateAuthority)
         {
-            _rb.linearVelocity = Vector2.zero;
+            transform.position = Vector2.Lerp(transform.position, NetworkedPosition, Time.deltaTime * 10f);
         }
     }
 }

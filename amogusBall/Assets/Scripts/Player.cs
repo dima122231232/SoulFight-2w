@@ -1,44 +1,82 @@
-using Fusion;
-using UnityEngine;
+//using Fusion;
+//using Fusion.Addons.Physics;
+//using UnityEngine;
 
-[RequireComponent(typeof(NetworkObject))]
+//[RequireComponent(typeof(NetworkObject))]
+//public class Player : NetworkBehaviour
+//{
+//    [Networked]
+//    private Vector2 NetworkedPosition { get; set; }
+
+//    public float speed = 15f;
+
+//    private void Start()
+//    {
+//        if (Object.HasStateAuthority)
+//        {
+//            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//            NetworkedPosition = transform.position;
+//        }
+//    }
+
+//    public override void FixedUpdateNetwork()
+//    {
+//        if (GetInput(out NetworkInputData data))
+//        {
+//            if (data.direction != Vector2.zero)
+//                data.direction.Normalize();
+
+//            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//            Vector2 newPosition = NetworkedPosition + data.direction * speed * Runner.DeltaTime;
+
+//            NetworkedPosition = newPosition;
+//            transform.position = newPosition; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//        }
+//    }
+
+//    private void Update()
+//    {
+//        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//        if (!Object.HasStateAuthority)
+//        {
+//            transform.position = Vector2.Lerp(transform.position, NetworkedPosition, Time.deltaTime * 10f);
+//        }
+//    }
+//}
+
+
+using UnityEngine; // рџ‘€ Р”РѕР±Р°РІСЊ СЌС‚Рѕ
+using Fusion;
+using Fusion.Addons.Physics;
+
 public class Player : NetworkBehaviour
 {
-    [Networked]
-    private Vector2 NetworkedPosition { get; set; }
+    private NetworkRigidbody2D _cc;
 
-    public float speed = 15f;
-
-    private void Start()
+    private void Awake()
     {
-        if (Object.HasStateAuthority)
-        {
-            // Инициализация позиции на сервере
-            NetworkedPosition = transform.position;
-        }
+        _cc = GetComponent<NetworkRigidbody2D>();
     }
 
     public override void FixedUpdateNetwork()
     {
         if (GetInput(out NetworkInputData data))
         {
-            if (data.direction != Vector2.zero)
-                data.direction.Normalize();
-
-            // Обновляем позицию на основе направления и скорости
-            Vector2 newPosition = NetworkedPosition + data.direction * speed * Runner.DeltaTime;
-
-            NetworkedPosition = newPosition;
-            transform.position = newPosition; // обновляем позицию сразу для хоста/сервера
+            data.direction.Normalize();
+            Vector2 targetVelocity = 5 * data.direction;
+            _cc.Rigidbody.linearVelocity = targetVelocity;
         }
     }
-
-    private void Update()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Клиенты без авторитета плавно интерполируют позицию для плавности
         if (!Object.HasStateAuthority)
+            return;
+
+        Ball ball = collision.gameObject.GetComponent<Ball>();
+        if (ball != null)
         {
-            transform.position = Vector2.Lerp(transform.position, NetworkedPosition, Time.deltaTime * 10f);
+            Vector2 direction = (ball.transform.position - transform.position).normalized;
+            ball.Kick(direction);
         }
     }
 }

@@ -3,7 +3,7 @@
   "WorkspaceRootPath": "D:\\SoulFight-2w\\amogusBall\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CDEB748B-C786-F932-4009-149D32056CA8}|Assembly-CSharp.csproj|D:\\SoulFight-2w\\amogusBall\\assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{CDEB748B-C786-F932-4009-149D32056CA8}|Assembly-CSharp.csproj|d:\\soulfight-2w\\amogusball\\assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CDEB748B-C786-F932-4009-149D32056CA8}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -13,6 +13,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{CDEB748B-C786-F932-4009-149D32056CA8}|Assembly-CSharp.csproj|D:\\SoulFight-2w\\amogusBall\\assets\\scripts\\networkinputdate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CDEB748B-C786-F932-4009-149D32056CA8}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\networkinputdate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CDEB748B-C786-F932-4009-149D32056CA8}|Assembly-CSharp.csproj|d:\\soulfight-2w\\amogusball\\assets\\scripts\\ball.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CDEB748B-C786-F932-4009-149D32056CA8}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\ball.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -32,10 +36,23 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\Player.cs",
               "ToolTip": "D:\\SoulFight-2w\\amogusBall\\Assets\\Scripts\\Player.cs",
               "RelativeToolTip": "Assets\\Scripts\\Player.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAA1wCUAAAA4AAAAAAAAAA==",
+              "ViewState": "AgIAADMAAAAAAAAAAAA1wEUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-07T14:23:22.83Z",
               "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ball.cs",
+              "DocumentMoniker": "D:\\SoulFight-2w\\amogusBall\\Assets\\Scripts\\ball.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ball.cs",
+              "ToolTip": "D:\\SoulFight-2w\\amogusBall\\Assets\\Scripts\\ball.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ball.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-08T11:23:31.698Z",
               "EditorCaption": ""
             },
             {
@@ -46,7 +63,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\BasicSpawner.cs",
               "ToolTip": "D:\\SoulFight-2w\\amogusBall\\Assets\\Scripts\\BasicSpawner.cs",
               "RelativeToolTip": "Assets\\Scripts\\BasicSpawner.cs",
-              "ViewState": "AgIAADUAAAAAAAAAAAAkwEMAAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEgAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-07T05:40:21.596Z",
               "EditorCaption": ""
@@ -59,7 +76,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\NetworkInputDate.cs",
               "ToolTip": "D:\\SoulFight-2w\\amogusBall\\Assets\\Scripts\\NetworkInputDate.cs",
               "RelativeToolTip": "Assets\\Scripts\\NetworkInputDate.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAA6wAUAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-07T05:54:58.26Z",
               "EditorCaption": ""

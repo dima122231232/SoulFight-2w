@@ -45,7 +45,7 @@
 //}
 
 
-using UnityEngine; // 👈 Добавь это
+using UnityEngine;
 using Fusion;
 using Fusion.Addons.Physics;
 
@@ -67,6 +67,7 @@ public class Player : NetworkBehaviour
             _cc.Rigidbody.linearVelocity = targetVelocity;
         }
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!Object.HasStateAuthority)
@@ -75,8 +76,51 @@ public class Player : NetworkBehaviour
         Ball ball = collision.gameObject.GetComponent<Ball>();
         if (ball != null)
         {
+            // Направление от игрока к мячу
             Vector2 direction = (ball.transform.position - transform.position).normalized;
-            ball.Kick(direction);
+
+            // Скорость игрока
+            float playerSpeed = _cc.Rigidbody.linearVelocity.magnitude;
+
+            // Множитель силы удара (регулируй под вкус)
+            float kickForce = playerSpeed * 2f;
+
+            // Пинок с силой
+            ball.Kick(direction, kickForce);
         }
     }
 }
+
+
+
+//public class Player : NetworkBehaviour
+//{
+//    private NetworkRigidbody2D _cc;
+
+//    private void Awake()
+//    {
+//        _cc = GetComponent<NetworkRigidbody2D>();
+//    }
+
+//    public override void FixedUpdateNetwork()
+//    {
+//        if (GetInput(out NetworkInputData data))
+//        {
+//            data.direction.Normalize();
+//            Vector2 targetVelocity = 5 * data.direction;
+//            _cc.Rigidbody.linearVelocity = targetVelocity;
+//        }
+//    }
+//    private void OnCollisionEnter2D(Collision2D collision)
+//    {
+//        if (!Object.HasStateAuthority)
+//            return;
+
+//        Ball ball = collision.gameObject.GetComponent<Ball>();
+//        if (ball != null)
+//        {
+//            Vector2 direction = (ball.transform.position - transform.position).normalized;
+//            ball.Kick(direction);
+//        }
+//    }
+//}

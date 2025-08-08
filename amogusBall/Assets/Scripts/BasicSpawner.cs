@@ -11,11 +11,9 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     async void StartGame(GameMode mode)
     {
-        // Create the Fusion runner and let it know that we will be providing user input
         _runner = gameObject.AddComponent<NetworkRunner>();
         _runner.ProvideInput = true;
 
-        // Create the NetworkSceneInfo from the current scene
         var scene = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex);
         var sceneInfo = new NetworkSceneInfo();
         if (scene.IsValid)
@@ -23,7 +21,6 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
             sceneInfo.AddSceneRef(scene, LoadSceneMode.Additive);
         }
 
-        // Start or join (depends on gamemode) a session with a specific name
         await _runner.StartGame(new StartGameArgs()
         {
             GameMode = mode,
@@ -53,10 +50,8 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     {
         if (runner.IsServer)
         {
-            // Create a unique position for the player
             Vector3 spawnPosition = new Vector3((player.RawEncoded % runner.Config.Simulation.PlayerCount) * 3, 1, 0);
             NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
-            // Keep track of the player avatars for easy access
             _spawnedCharacters.Add(player, networkPlayerObject);
         }
     }

@@ -29,15 +29,35 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
             SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
         });
     }
+
     private void OnGUI()
     {
         if (_runner == null)
         {
-            if (GUI.Button(new Rect(0, 0, 200, 40), "Host"))
+            float buttonWidth = 200;
+            float buttonHeight = 40;
+            float spacing = 10;
+
+            float centerX = Screen.width / 2f;
+            float centerY = Screen.height / 2f;
+
+            Rect hostButtonRect = new Rect(
+                centerX - buttonWidth / 2,
+                centerY - buttonHeight - spacing / 2,
+                buttonWidth,
+                buttonHeight);
+
+            Rect joinButtonRect = new Rect(
+                centerX - buttonWidth / 2,
+                centerY + spacing / 2,
+                buttonWidth,
+                buttonHeight);
+
+            if (GUI.Button(hostButtonRect, "Host"))
             {
                 StartGame(GameMode.Host);
             }
-            if (GUI.Button(new Rect(0, 40, 200, 40), "Join"))
+            if (GUI.Button(joinButtonRect, "Join"))
             {
                 StartGame(GameMode.Client);
             }
@@ -46,6 +66,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     [SerializeField] private NetworkPrefabRef _playerPrefab;
     private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
+
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         if (runner.IsServer)
@@ -63,25 +84,27 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
             _spawnedCharacters.Remove(player);
         }
     }
+
     public void OnInput(NetworkRunner runner, NetworkInput input)
-{
-    var data = new NetworkInputData();
+    {
+        var data = new NetworkInputData();
 
-    if (Input.GetKey(KeyCode.W))
-        data.direction += Vector2.up;
+        if (Input.GetKey(KeyCode.W))
+            data.direction += Vector2.up;
 
-    if (Input.GetKey(KeyCode.S))
-        data.direction += Vector2.down;
+        if (Input.GetKey(KeyCode.S))
+            data.direction += Vector2.down;
 
-    if (Input.GetKey(KeyCode.A))
-        data.direction += Vector2.left;
+        if (Input.GetKey(KeyCode.A))
+            data.direction += Vector2.left;
 
-    if (Input.GetKey(KeyCode.D))
-        data.direction += Vector2.right;
+        if (Input.GetKey(KeyCode.D))
+            data.direction += Vector2.right;
 
-    input.Set(data);
-}
+        input.Set(data);
+    }
 
+    // Остальные методы INetworkRunnerCallbacks (пустые реализации)
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
     public void OnConnectedToServer(NetworkRunner runner) { }

@@ -1,70 +1,75 @@
-//using Fusion;
-//using Fusion.Addons.Physics;
-//using UnityEngine;
-
-//[RequireComponent(typeof(NetworkObject))]
-//public class Player : NetworkBehaviour
-//{
-//    [Networked]
-//    private Vector2 NetworkedPosition { get; set; }
-
-//    public float speed = 15f;
-
-//    private void Start()
-//    {
-//        if (Object.HasStateAuthority)
-//        {
-//            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
-//            NetworkedPosition = transform.position;
-//        }
-//    }
-
-//    public override void FixedUpdateNetwork()
-//    {
-//        if (GetInput(out NetworkInputData data))
-//        {
-//            if (data.direction != Vector2.zero)
-//                data.direction.Normalize();
-
-//            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
-//            Vector2 newPosition = NetworkedPosition + data.direction * speed * Runner.DeltaTime;
-
-//            NetworkedPosition = newPosition;
-//            transform.position = newPosition; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
-//        }
-//    }
-
-//    private void Update()
-//    {
-//        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
-//        if (!Object.HasStateAuthority)
-//        {
-//            transform.position = Vector2.Lerp(transform.position, NetworkedPosition, Time.deltaTime * 10f);
-//        }
-//    }
-//}
-
-
 using UnityEngine;
 using Fusion;
 using Fusion.Addons.Physics;
 
 public class Player : NetworkBehaviour
 {
-    private NetworkRigidbody2D _cc;
+    private NetworkRigidbody2D _networkRigidbody;
+
+    [SerializeField] private LayerMask wallLayer;
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float collisionCheckDistance = 0.6f;
+
+    private GameObject _indicator;
 
     private void Awake()
     {
-        _cc = GetComponent<NetworkRigidbody2D>();
+        _networkRigidbody = GetComponent<NetworkRigidbody2D>();
+    }
+
+    public override void Spawned()
+    {
+        // Создаём треугольник только для локального игрока
+        if (Object.HasInputAuthority)
+        {
+            CreateIndicator();
+        }
+    }
+
+    void CreateIndicator()
+    {
+        _indicator = new GameObject("PlayerIndicator");
+
+        // Рендерим спрайт
+        var sr = _indicator.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("triangle"); // triangle.png в Assets/Resources/
+        Color color;
+        if (ColorUtility.TryParseHtmlString("#0000FF", out color))
+        {
+            sr.color = color;
+        }
+        sr.sortingOrder = 10;
+
+        // Привязываем к игроку
+        _indicator.transform.SetParent(transform);
+        _indicator.transform.localPosition = new Vector3(0, 0.75f, 0);
+        _indicator.transform.localScale = new Vector3(0.25f, 0.25f, 1);
+        _indicator.transform.localRotation = Quaternion.Euler(0, 0, 180);
     }
 
     public override void FixedUpdateNetwork()
     {
         if (GetInput(out NetworkInputData data))
         {
-            data.direction.Normalize();
-            Vector2 targetVelocity = 5 * data.direction;
-            _cc.Rigidbody.linearVelocity = targetVelocity;
+            if (data.direction.sqrMagnitude > 0)
+                data.direction.Normalize();
+            else
+            {
+                _networkRigidbody.Rigidbody.linearVelocity = Vector2.zero;
+                return;
+            }
+
+            // Проверка столкновения со стеной по направлению движения
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, data.direction, collisionCheckDistance, wallLayer);
+            if (hit.collider == null)
+            {
+                Vector2 targetVelocity = speed * data.direction;
+                _networkRigidbody.Rigidbody.linearVelocity = targetVelocity;
+            }
+            else
+            {
+                _networkRigidbody.Rigidbody.linearVelocity = Vector2.zero;
+            }
         }
     }
 
@@ -76,51 +81,10 @@ public class Player : NetworkBehaviour
         Ball ball = collision.gameObject.GetComponent<Ball>();
         if (ball != null)
         {
-            // РќР°РїСЂР°РІР»РµРЅРёРµ РѕС‚ РёРіСЂРѕРєР° Рє РјСЏС‡Сѓ
             Vector2 direction = (ball.transform.position - transform.position).normalized;
-
-            // РЎРєРѕСЂРѕСЃС‚СЊ РёРіСЂРѕРєР°
-            float playerSpeed = _cc.Rigidbody.linearVelocity.magnitude;
-
-            // РњРЅРѕР¶РёС‚РµР»СЊ СЃРёР»С‹ СѓРґР°СЂР° (СЂРµРіСѓР»РёСЂСѓР№ РїРѕРґ РІРєСѓСЃ)
+            float playerSpeed = _networkRigidbody.Rigidbody.linearVelocity.magnitude;
             float kickForce = playerSpeed * 2f;
-
-            // РџРёРЅРѕРє СЃ СЃРёР»РѕР№
             ball.Kick(direction, kickForce);
         }
     }
 }
-
-
-
-//public class Player : NetworkBehaviour
-//{
-//    private NetworkRigidbody2D _cc;
-
-//    private void Awake()
-//    {
-//        _cc = GetComponent<NetworkRigidbody2D>();
-//    }
-
-//    public override void FixedUpdateNetwork()
-//    {
-//        if (GetInput(out NetworkInputData data))
-//        {
-//            data.direction.Normalize();
-//            Vector2 targetVelocity = 5 * data.direction;
-//            _cc.Rigidbody.linearVelocity = targetVelocity;
-//        }
-//    }
-//    private void OnCollisionEnter2D(Collision2D collision)
-//    {
-//        if (!Object.HasStateAuthority)
-//            return;
-
-//        Ball ball = collision.gameObject.GetComponent<Ball>();
-//        if (ball != null)
-//        {
-//            Vector2 direction = (ball.transform.position - transform.position).normalized;
-//            ball.Kick(direction);
-//        }
-//    }
-//}

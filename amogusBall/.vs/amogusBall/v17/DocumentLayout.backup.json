@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "G:\\Distrib\\SoulFight-2w\\amogusBall\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CDEB748B-C786-F932-4009-149D32056CA8}|Assembly-CSharp.csproj|G:\\Distrib\\SoulFight-2w\\amogusBall\\assets\\scripts\\ball.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CDEB748B-C786-F932-4009-149D32056CA8}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\ball.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CDEB748B-C786-F932-4009-149D32056CA8}|Assembly-CSharp.csproj|G:\\Distrib\\SoulFight-2w\\amogusBall\\assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CDEB748B-C786-F932-4009-149D32056CA8}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CDEB748B-C786-F932-4009-149D32056CA8}|Assembly-CSharp.csproj|g:\\distrib\\soulfight-2w\\amogusball\\assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CDEB748B-C786-F932-4009-149D32056CA8}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CDEB748B-C786-F932-4009-149D32056CA8}|Assembly-CSharp.csproj|g:\\distrib\\soulfight-2w\\amogusball\\assets\\scripts\\network\\playerindicator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CDEB748B-C786-F932-4009-149D32056CA8}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\network\\playerindicator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CDEB748B-C786-F932-4009-149D32056CA8}|Assembly-CSharp.csproj|g:\\distrib\\soulfight-2w\\amogusball\\assets\\scripts\\ball.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CDEB748B-C786-F932-4009-149D32056CA8}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\ball.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CDEB748B-C786-F932-4009-149D32056CA8}|Assembly-CSharp.csproj|G:\\Distrib\\SoulFight-2w\\amogusBall\\assets\\scripts\\network\\basicspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -26,7 +30,20 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "PlayerIndicator.cs",
+              "DocumentMoniker": "G:\\Distrib\\SoulFight-2w\\amogusBall\\Assets\\Scripts\\Network\\PlayerIndicator.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Network\\PlayerIndicator.cs",
+              "ToolTip": "G:\\Distrib\\SoulFight-2w\\amogusBall\\Assets\\Scripts\\Network\\PlayerIndicator.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Network\\PlayerIndicator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-10T14:49:35.249Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "BasicSpawner.cs",
               "DocumentMoniker": "G:\\Distrib\\SoulFight-2w\\amogusBall\\Assets\\Scripts\\Network\\BasicSpawner.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Network\\BasicSpawner.cs",
@@ -39,20 +56,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Player.cs",
               "DocumentMoniker": "G:\\Distrib\\SoulFight-2w\\amogusBall\\Assets\\Scripts\\Player.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Player.cs",
               "ToolTip": "G:\\Distrib\\SoulFight-2w\\amogusBall\\Assets\\Scripts\\Player.cs",
               "RelativeToolTip": "Assets\\Scripts\\Player.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwCYAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-08T17:43:00.962Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Ball.cs",
               "DocumentMoniker": "G:\\Distrib\\SoulFight-2w\\amogusBall\\Assets\\Scripts\\Ball.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Ball.cs",
